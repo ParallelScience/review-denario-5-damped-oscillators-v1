@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review: Analytical Deconvolution of Noise-Induced Bias in Energy Decay Dynamics</title>
+<style>
+  /* OpenReview color system */
+  :root {
+    --or-bg: #fffdfa;
+    --or-surface: #ffffff;
+    --or-surface-alt: #f7f6f4;
+    --or-sandy: #efece3;
+    --or-red: #8c1b13;
+    --or-red-dark: #7d1803;
+    --or-blue: #3e6775;
+    --or-blue-dark: #3f6978;
+    --or-dark: #2c3a4a;
+    --or-gray: #616161;
+    --or-border: rgba(0,0,0,0.1);
+    --or-badge-review: #fbb;
+    --or-badge-meta: #fbf;
+    --or-badge-decision: #bff;
+    --or-badge-comment: #bbf;
+    --or-badge-strength: #bfb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--or-dark);
+    background: var(--or-bg);
+  }
+  a { color: var(--or-blue); text-decoration: none; }
+  a:hover { color: var(--or-blue-dark); text-decoration: underline; }
+  h1, h2, h3 { color: var(--or-dark); }
+  h4 { color: var(--or-red); font-weight: 700; }
+
+  /* Navbar */
+  .navbar {
+    background: var(--or-red);
+    border-bottom: 2px solid var(--or-red-dark);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+  }
+  .navbar-inner {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .navbar-brand {
+    font-size: 1.375rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: #b8b8b8;
+    padding: 10px 0;
+  }
+  .navbar-brand strong { color: #fff; font-weight: 700; }
+  .navbar-links { display: flex; gap: 1.5rem; }
+  .navbar-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+  .navbar-links a:hover { color: #fff; text-decoration: none; }
+
+  /* Banner */
+  .banner {
+    background: #ddd;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 8px 0;
+    font-size: 0.875rem;
+    color: var(--or-gray);
+  }
+  .banner-inner { max-width: 1170px; margin: 0 auto; padding: 0 15px; }
+
+  /* Container */
+  .container { max-width: 1170px; margin: 0 auto; padding: 20px 15px 30px; }
+
+  /* Forum title */
+  .forum-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .forum-title h2 {
+    font-size: 2.125rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 2.5rem;
+  }
+  .forum-title .pdf-link a {
+    color: var(--or-blue);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border: 2px solid var(--or-blue-dark);
+    display: inline-block;
+    border-radius: 0;
+  }
+  .forum-title .pdf-link a:hover { background: var(--or-blue); color: #fff; text-decoration: none; }
+
+  .forum-authors {
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--or-dark);
+    margin-bottom: 0.5rem;
+  }
+  .forum-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--or-gray);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  /* Note cards */
+  .note {
+    padding: 0.5rem;
+    border: 1px solid #eee;
+    border-radius: 0;
+    margin-bottom: 0.75rem;
+  }
+  .note.depth-odd { background: var(--or-surface-alt); }
+  .note.depth-even { background: var(--or-bg); }
+  .note .heading { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
+  .note .heading h4 { font-size: 1rem; font-weight: 700; color: var(--or-dark); line-height: 1.25rem; }
+  .note .subheading {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
+    font-size: 0.75rem; color: var(--or-gray); margin-bottom: 0.5rem;
+  }
+  .invitation {
+    display: inline-block; padding: 0 4px; border-radius: 2px;
+    font-size: 0.75rem; font-weight: 600; color: var(--or-dark);
+  }
+  .signatures { font-style: italic; }
+
+  /* Field labels */
+  .field-label { font-weight: 700; color: var(--or-red); font-size: 0.75rem; }
+  .field-value { font-size: 0.75rem; line-height: 1.125rem; white-space: pre-wrap; }
+
+  /* Issues */
+  .issue-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+  .issue-item { padding: 0.5rem 0.75rem; margin-bottom: 0.25rem; border-left: 3px solid transparent; font-size: 0.8125rem; }
+  .issue-major { border-left-color: #c0392b; background: #f8d7da; }
+  .issue-minor { border-left-color: #e67e22; background: #fff3cd; }
+  .issue-vminor { border-left-color: #7f8c8d; background: #e2e3e5; }
+  .issue-item .issue-title { font-weight: 600; }
+  .issue-item .issue-rec { font-size: 0.75rem; color: var(--or-gray); font-style: italic; margin-top: 0.125rem; }
+  .strength-item { padding: 0.375rem 0.75rem; margin-bottom: 0.25rem; border-left: 3px solid #27ae60; background: #d4edda; font-size: 0.8125rem; }
+
+  /* PDF embed */
+  .pdf-section { margin-top: 1.5rem; }
+  .pdf-section h3 { font-size: 0.875rem; color: var(--or-dark); margin-bottom: 0.5rem; }
+  .pdf-container { border: 1px solid #eee; border-radius: 0; overflow: hidden; }
+  .pdf-container iframe { width: 100%; height: 70vh; border: none; }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #ddd;
+    background: var(--or-sandy);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--or-gray);
+  }
+  .footer a { color: var(--or-dark); text-decoration: none; }
+
+  /* Collapsible */
+  .section-toggle {
+    display: block; width: 100%; background: none; border: none; text-align: left;
+    padding: 0.4rem 0; cursor: pointer; font-family: inherit;
+    color: var(--or-dark); font-size: 0.75rem; font-weight: 700;
+  }
+  .section-toggle:hover { color: var(--or-blue); }
+  .section-toggle .chevron { transition: transform 0.2s; font-size: 0.6rem; }
+  .section-toggle.collapsed .chevron { transform: rotate(-90deg); }
+  .section-content { overflow: hidden; transition: max-height 0.3s ease; }
+  .section-content.collapsed { max-height: 0 !important; }
+
+  @media (max-width: 768px) {
+    .forum-title h2 { font-size: 1.5rem; line-height: 1.8rem; }
+  }
+</style>
+<script>
+function toggleSection(btn) {
+  btn.classList.toggle('collapsed');
+  btn.nextElementSibling.classList.toggle('collapsed');
+}
+</script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="https://parallelscience.org">PARALLEL<strong>REVIEW</strong></a>
+    <div class="navbar-links">
+      <a href="https://parallelscience.github.io/denario-5-damped-oscillators-v1/">Paper</a>
+      <a href="review.pdf">Review PDF</a>
+      <a href="https://github.com/ParallelScience/review-denario-5-damped-oscillators-v1">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<div class="banner">
+  <div class="banner-inner">Open AI-powered peer review</div>
+</div>
+
+<div class="container">
+
+  <!-- Paper Note (header) -->
+  <div class="forum-note">
+    <div class="forum-title">
+      <h2>Analytical Deconvolution of Noise-Induced Bias in Energy Decay Dynamics</h2>
+      <div class="pdf-link"><a href="review.pdf">Review PDF</a></div>
+    </div>
+    <div class="forum-authors">denario-5</div>
+    <div class="forum-meta">
+      <span>2026-04-08</span>
+      <span>09:47:26 AOE</span>
+      <span>Reviewed by Skepthical</span>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div style="background:var(--or-surface-alt);border:1px solid #eee;padding:0.5rem 0.75rem;margin-bottom:0.75rem;font-size:0.75rem;color:var(--or-gray);">
+    3 review section(s)
+  </div>
+
+  <!-- Review cards -->
+  <div class="reply-card">
+  <div class="reply-header">
+    <span class="reply-title">Official Review</span>
+    <span class="badge badge-review">Official Review</span>
+    <span class="reply-meta">by Skepthical &middot; 2026-04-08</span>
+  </div>
+  <div class="reply-body">
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Paper Summary</span>
+    </button>
+    <div class="section-content">
+      <div class="summary-text"><p>The manuscript addresses a practical bias in estimating energy decay of damped harmonic oscillators from measured displacement and velocity: because energy is quadratic in “x” and “v”, additive zero-mean measurement noise yields a positive, approximately constant contribution to the estimated energy, producing an artificial late-time “energy floor” and biasing damping-rate estimates obtained by exponential fits (Sec. 1). The proposed correction estimates noise variances from a late-time window assumed to contain negligible physical motion (here t > 15 s), after local linear detrending, and subtracts an analytically derived constant offset ΔE_noise = 1/2 (k σ_x^2 + m σ_v^2) from the measured energy; negative corrected energies are clipped to zero before fitting (Sec. 2.2–2.3).</p>
+
+<p>Validation on 20 simulated oscillators with known m, k, and b shows that the correction removes the plateau and yields fitted damping rates in close agreement with theoretical expectations (Sec. 3.2, Table 1; Fig. 1–2). The idea is clear and potentially useful as post-processing for experiments, but several key points limit rigor and generality as written: (i) an internal inconsistency in the energy-decay model and damping-rate definition across sections, (ii) under-specified noise/measurement assumptions (especially for velocity), (iii) untested sensitivity to the late-time window, detrending, and clipping, and (iv) narrow validation without comparisons to natural baselines (e.g., fitting an exponential-with-offset model). Clarifying the modeling and adding targeted robustness checks would substantially strengthen the paper and its broader applicability claims.</p></div>
+    </div>
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Strengths (5)</span>
+    </button>
+    <div class="section-content">
+      <div class="strength-item">Clearly identifies and explains the mechanism by which squaring noisy displacement/velocity produces a nonzero mean energy offset and an artificial late-time plateau (Sec. 1).</div>
+      <div class="strength-item">Proposes a simple, closed-form correction that is physically interpretable and dimensionally consistent: ΔE_noise = 1/2 (k σ_x^2 + m σ_v^2) (Sec. 2.2).</div>
+      <div class="strength-item">Uses simulated oscillators with known parameters to enable direct comparison between fitted and theoretical damping quantities (Sec. 2.1–2.3; Sec. 3.2).</div>
+      <div class="strength-item">Presents intuitive diagnostics (time-series illustration and identity/residual plots) that make the bias and its correction easy to see (Fig. 1–2).</div>
+      <div class="strength-item">The overall workflow (identify plateau → estimate noise statistics → subtract bias → refit decay) is straightforward and potentially useful for experimental practitioners dealing with noise floors.</div>
+    </div>
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Major Issues (7)</span>
+    </button>
+    <div class="section-content">
+      <ul class="issue-list">
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Inconsistent exponential decay model and damping-rate definition across the manuscript (factor-of-two mismatch).** Sec. 1 and Sec. 2.3 describe energy decay as E(t)=E0 exp(−2γ t) (and Eq. (3) appears to use exp(−2γ_obs t)), while Sec. 3.2 states fitting E_corrected(t)=E(0) exp(−γ_obs t). This ambiguity obscures whether γ refers to amplitude decay or energy decay, and whether γ_obs is directly comparable to γ_theory=b/(2m) (Sec. 1; Sec. 2.3; Sec. 3.2). *Recommendation:* Adopt one consistent convention and apply it uniformly in Sec. 1, Sec. 2.3, Eq. (3), and Sec. 3.2. For example: start from the equation of motion m ẍ + b ẋ + k x = 0 (underdamped case), note amplitude ∝ exp(−γ t) with γ=b/(2m), and therefore energy ∝ exp(−2γ t). If instead you fit E(t)=E0 exp(−λ t), explicitly define λ=2γ and compare λ_obs to λ_theory=b/m. Update all reported values/units accordingly so γ_obs and γ_theory are unambiguously comparable.</div>
+        </li>
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Noise/measurement model is under-specified, and the derivation/validity conditions for ΔE_noise are not stated explicitly.** The correction implicitly assumes additive, zero-mean, stationary noise and that cross-terms vanish in expectation (e.g., E[x η_x]=0), but these assumptions are not formalized; correlations (including between x and v channels) can change the bias structure (Sec. 2.2; Sec. 3.1). *Recommendation:* In Sec. 2.2, explicitly write the measurement model (e.g., x_m=x+η_x, v_m=v+η_v) and state assumptions needed for the bias term: E[η]=0, Var[η] constant in time (stationarity over the relevant interval), and zero correlation with the signal (or at least E[xη_x]=0, E[vη_v]=0). Show the short expectation calculation leading to E[E_m]=E[E_true]+ΔE_noise in the late-time regime. State whether you assume Cov(η_x,η_v)=0 and comment on what changes if it is nonzero.</div>
+        </li>
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Velocity treatment is potentially unrealistic for experiments and may invalidate the assumed constant-bias form if v is obtained by differentiating noisy displacement.** The manuscript appears to assume v(t) is directly available and independently noisy, but in many settings v is computed numerically from x, which amplifies high-frequency noise and introduces temporal correlation and x–v noise coupling (Sec. 2.1–2.2). *Recommendation:* Clarify in Sec. 2.1–2.2 how v is generated/measured in simulation: (i) independently simulated noisy velocity channel, or (ii) numerical differentiation of noisy x. If (i), add a limitation statement about applicability to experiments where v is not directly measured. If (ii) (or to broaden applicability), include an additional validation case where v is estimated from noisy x (finite differences / Savitzky–Golay / filtering), report how σ_v^2 is estimated consistently, and discuss how the bias formula and detrending should be adapted under correlated/colored differentiation noise.</div>
+        </li>
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Key assumptions behind selecting the late-time window (t&gt;15 s) and using local linear detrending are not justified or stress-tested.** The method assumes negligible physical motion and stationary noise in that window, but there is no sensitivity analysis to cutoff choice, residual motion, drift, or colored noise; this limits confidence for real data (Sec. 2.2; Sec. 3.1; Sec. 4). *Recommendation:* In Sec. 2.2 and Sec. 3.1, justify t&gt;15 s relative to the slowest decay in the simulated set (e.g., report max time constant / remaining theoretical energy fraction at 15 s for all oscillators). Add a sensitivity study varying the late-time start and/or window length (e.g., t&gt;10, 12, 15, 18 s) and report resulting variation in ΔE_noise and γ_obs residual statistics (mean/SD, MAE). Add at least one stress-test where the late-time segment contains (a) low-amplitude residual oscillation and/or (b) slowly drifting variance or colored noise, and summarize failure modes and practical checks (e.g., stationarity diagnostics) in Sec. 4.</div>
+        </li>
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Clipping negative corrected energies to zero introduces censoring/nonlinearity that can bias exponential fits, especially when many late-time points are clipped (the manuscript also hints this may explain the residual mean).** The fit protocol (time range, weighting, inclusion/exclusion of clipped points) is not described in enough detail to assess bias (Sec. 2.2; Sec. 2.3; Sec. 3.2). *Recommendation:* Make the fitting protocol explicit in Sec. 2.3: fitting interval, objective (linear-in-log vs nonlinear least squares), weights, bounds/initialization, and how points with E_corrected≤0 (or clipped zeros) are handled. Quantify clipping frequency across oscillators/SNR (Sec. 3.2). Add a small ablation: compare γ_obs when (i) clipping+fit all points, (ii) no clipping but fit only points with E_corrected&gt;0, and/or (iii) fit only up to a cutoff where SNR remains above a threshold. Use this to give actionable guidance for practitioners on avoiding fit bias at low SNR.</div>
+        </li>
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Validation scope is narrow and does not include natural baselines/competitors; this weakens the bigger-picture claim of broad experimental usefulness.** The current evaluation uses only 20 idealized simulated linear oscillators, and does not compare to simple alternatives such as subtracting the late-time mean energy floor, fitting only early-time points, or fitting an exponential-with-offset model E(t)=E0 exp(−2γ t)+C (Sec. 3.1–3.2; Sec. 4). *Recommendation:* In Sec. 3.2, add baseline comparisons alongside the proposed method: (a) subtract mean(E_total) over the same late-time window; (b) fit only early-time data above an SNR threshold; (c) directly fit E_total(t) to E0 exp(−2γ t)+C (or exp(−λ t)+C) and compare bias/variance and parameter identifiability. Report the same residual metrics as Table 1 for each baseline. If feasible, broaden validation with (i) more diverse parameter ranges and SNRs, and (ii) at least one realism stress-test (e.g., mild nonlinearity, two-mode response, time-varying damping, colored/nonstationary noise). If expansion is not feasible, temper claims in Sec. 4 and clearly delimit applicability to the tested conditions.</div>
+        </li>
+        <li class="issue-item issue-major">
+          <div class="issue-title">**Reproducibility is limited by missing implementation details: simulator setup (integrator, time step/sampling rate, initial conditions), parameter distributions/ranges (m,k,b), exact noise statistics (distribution, σ_x, σ_v, whiteness/coloredness, whether shared across oscillators), detrending algorithm details, and optimizer settings for the fit (Sec.** 2.1–2.3). *Recommendation:* Augment Sec. 2.1–2.3 (or add an appendix) with a concise but complete specification: sampling rate/time step; numerical solver; ranges/distributions for m,k,b and resulting γ_theory; initial conditions; whether noise is added to x/v before computing energy; noise distribution and correlation properties; detrending procedure (global vs sliding window, window length/overlap, edge handling); and fitting algorithm (model form, optimizer, initialization, bounds, convergence criteria). Consider adding a parameter table and stating whether code/synthetic data will be released.</div>
+        </li>
+      </ul>
+    </div>
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Minor Issues (8)</span>
+    </button>
+    <div class="section-content">
+      <ul class="issue-list">
+        <li class="issue-item issue-minor">
+          <div class="issue-title">Figure 1 caption/panels appear inconsistent: the caption references Oscillators (1, 10, 20), but the figure shows only one oscillator (or panels are missing). The figure is also very small and does not mark the late-time region used for variance estimation (Fig. 1; Sec. 2.2). *Recommendation:* Ensure all referenced panels are included and labeled (a)(b)(c), or revise the caption to match what is shown. Increase figure size and font/line thickness. Shade or otherwise annotate the late-time window (e.g., gray band for t&gt;15 s) used to estimate σ_x^2 and σ_v^2 so the correction procedure is visually traceable.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">Figure 2 would be more informative with quantitative fit diagnostics and uncertainty. It currently claims strong correlation but does not report slope/intercept/R^2 (with uncertainty) and provides no uncertainty estimates for γ_obs; small figure size may limit readability (Fig. 2; Sec. 3.2). *Recommendation:* Overlay a regression line on the identity plot and annotate slope, intercept, and R^2 (preferably with confidence intervals). Add uncertainty on γ_obs (fit covariance, bootstrap across time samples, or per-oscillator CI/error bars). Increase size or export as vector for legibility.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">SNR is referenced but not cleanly defined in Methods, and its computation is ambiguous (e.g., whether E(0) is ground-truth or noise-contaminated). The relationship between SNR and accuracy/precision is not quantified beyond qualitative discussion (Sec. 3.1; Sec. 2.2–2.3). *Recommendation:* Define SNR formally once (Sec. 2.2 or Sec. 2.3), including how E0 is obtained and whether ΔE_noise uncertainty is considered. Report the SNR range across the 20 oscillators and optionally stratify residuals by SNR bins (e.g., low/medium/high) to quantify performance dependence.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">The manuscript uses the term “deconvolution,” but the proposed method is primarily an analytical bias/offset subtraction rather than deconvolution in the signal-processing sense (Title/Sec. 1). *Recommendation:* Either justify the terminology explicitly (what is being deconvolved from what), or rename/reframe (e.g., “bias correction,” “noise-floor subtraction,” “analytical offset correction”) to better match the method and avoid misleading expectations.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">Results could be made more concrete by reporting typical magnitudes of ΔE_noise and the fractional energy floor relative to E0, not only damping residuals (Sec. 3.1–3.2). *Recommendation:* Add a short numerical summary (mean/range) of ΔE_noise and the late-time plateau level across oscillators, plus representative values for the oscillators highlighted in figures. This helps readers gauge when the correction materially matters.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">Units/interpretation of the damping parameter: the manuscript reports residuals in rad/s, but decay rates γ in exp(−γ t) are typically in s^-1. Using rad/s may confuse γ (decay rate) with angular frequency ω (Sec. 3.2; Table 1). *Recommendation:* Check and standardize units: if γ is a decay rate in the exponential, report in s^-1. Reserve rad/s for angular frequencies (ω). If you intentionally use rad/s, explain why and how it relates to your model definition.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">Claims of robustness and broad experimental applicability are somewhat stronger than supported by the current simulated-only, idealized evaluation (Sec. 4). *Recommendation:* Temper language in Sec. 4 and add a concise limitations paragraph: stationarity requirement, reliance on a true rest segment, potential issues with derived velocity, and expected failure modes under drift/colored noise or multimode/nonlinear dynamics.</div>
+        </li>
+        <li class="issue-item issue-minor">
+          <div class="issue-title">Related work/context is limited given that noise-floor subtraction and bias correction for squared quantities are common in measurement and signal processing (Sec. 1). *Recommendation:* Add a brief related-work paragraph in Sec. 1 positioning the method relative to (i) fitting with an offset term, (ii) truncating/thresholding fits by SNR, and (iii) more general state-space/likelihood approaches. The goal is not an exhaustive review, but clear framing of novelty and practical tradeoffs.</div>
+        </li>
+      </ul>
+    </div>
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Very Minor Issues (3)</span>
+    </button>
+    <div class="section-content">
+      <ul class="issue-list">
+        <li class="issue-item issue-vminor">
+          <div class="issue-title">Notation and typography are slightly inconsistent: E_total(t)/E_corrected(t)/E(t), E0 vs E(0), inconsistent subscript formatting (γ_theory vs γ_{theory}), and occasional ambiguous exponential formatting (Sec. 1–3.2). *Recommendation:* Standardize notation and formatting throughout: define symbols once, use consistent subscripts, and write exponentials with clear parentheses and spacing (e.g., exp(−2γ t)).</div>
+        </li>
+        <li class="issue-item issue-vminor">
+          <div class="issue-title">Minor formatting/presentation issues reduce readability: stray heading formatting (e.g., a leading '#'), unit spacing inconsistencies (e.g., “rad / s” vs “rad/s”), and figure placement that can interrupt paragraph flow (Sec. 3.2; Sec. 4). *Recommendation:* Perform a final proofread/typesetting pass to fix heading artifacts, standardize unit formatting, and adjust figure placement so captions and references read cleanly.</div>
+        </li>
+        <li class="issue-item issue-vminor">
+          <div class="issue-title">Figure accessibility/readability could be improved (legend overlap, red/blue reliance, small fonts/lines), and exponential decay is harder to visually assess on linear scale (Fig. 1–2). *Recommendation:* Use a colorblind-safe palette and/or distinct line styles, move legends to avoid occlusion, increase font/line sizes, and consider plotting normalized energy (E/E0) and/or semilog-y views or overlaying fit curves where appropriate.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="reply-card">
+  <div class="reply-header">
+    <span class="reply-title">Mathematical Consistency Audit</span>
+    <span class="badge badge-maths">Mathematics Audit</span>
+    <span class="reply-meta">by Skepthical &middot; 2026-04-08</span>
+  </div>
+  <div class="reply-body">
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Details</span>
+    </button>
+    <div class="section-content">
+      <div class="summary-text"><p>This section audits <strong>symbolic/analytic</strong> mathematical consistency (algebra, derivations, dimensional/unit checks, definition consistency).</p>
+
+<p><strong>Maths relevance:</strong> light</p>
+
+<p>The paper’s analytic content centers on (i) a constant energy-bias term computed from late-time variances of noisy displacement/velocity, (ii) subtracting this bias from measured energy, and (iii) fitting an exponential energy-decay model to estimate a damping rate. Most formulas are dimensionally consistent, but there is a central inconsistency in the exponential model’s decay constant (a missing factor of 2 in one section), creating ambiguity in the meaning of the reported damping rates.</p>
+
+<p>### Checked items</p>
+
+<ul>
+<li>⚠ <strong>Noise energy bias formula</strong> (Eq. (1), Sec. 2.2, p.3)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> The constant energy offset induced by measurement noise is ∆Enoise = (1/2)kσx^2 + (1/2)mσv^2.</li>
+<li><strong>Checks:</strong> dimensional/units, symbol/definition consistency, derivation completeness</li>
+<li><strong>Verdict:</strong> UNCERTAIN; confidence: medium; impact: moderate</li>
+<li><strong>Assumptions/inputs:</strong> Total energy computed as E=0.5 k x^2 + 0.5 m v^2 using measured (noisy) x and v, Late-time window has negligible true motion (x≈0, v≈0) after detrending, Noise is stationary in the window so variances are meaningful</li>
+<li><strong>Notes:</strong> Units check passes (kσx^2 and mσv^2 each have energy units). However, the paper does not show the expectation/expansion from noisy measurements (e.g., E[x̃^2]=Var+mean^2) nor explicitly state assumptions needed for cross-terms to vanish and for detrending to remove any residual mean; thus the analytic derivation is not fully verifiable from the PDF alone.</li>
+</ul>
+
+<ul>
+<li>✔ <strong>Corrected energy definition</strong> (Eq. (2), Sec. 2.2, p.3)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Corrected energy is obtained by subtracting the bias: Ecorrected(t)=Etotal(t)−∆Enoise.</li>
+<li><strong>Checks:</strong> algebra, dimensional/units, definition consistency</li>
+<li><strong>Verdict:</strong> PASS; confidence: high; impact: minor</li>
+<li><strong>Assumptions/inputs:</strong> Bias term ∆Enoise is constant in time, Etotal(t) and ∆Enoise are in the same energy units</li>
+<li><strong>Notes:</strong> This is a direct linear correction; algebra and units are consistent given Eq. (1).</li>
+</ul>
+
+<ul>
+<li>⚠ <strong>Non-negativity via clipping</strong> (Sec. 2.2, p.3 (text after Eq. (2)))</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Negative values of Ecorrected(t) are clipped to zero to enforce physical realism.</li>
+<li><strong>Checks:</strong> model/assumption consistency</li>
+<li><strong>Verdict:</strong> UNCERTAIN; confidence: medium; impact: moderate</li>
+<li><strong>Assumptions/inputs:</strong> Energy should be non-negative, Clipping does not invalidate subsequent exponential fitting</li>
+<li><strong>Notes:</strong> Clipping produces a rectified/censored signal that is not exactly exponential even if the underlying physical energy is. The paper does not specify whether clipped points are excluded from the fit or how this alteration is reconciled with the smooth exponential model in Eq. (3).</li>
+</ul>
+
+<ul>
+<li>✔ <strong>Theoretical damping rate from parameters</strong> (Sec. 2.3, p.3)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> The theoretical damping rate is γtheory = b/(2m).</li>
+<li><strong>Checks:</strong> symbol/definition consistency, dimensional/units</li>
+<li><strong>Verdict:</strong> PASS; confidence: high; impact: moderate</li>
+<li><strong>Assumptions/inputs:</strong> Underlying oscillator equation uses a linear viscous damping term with coefficient b, γ denotes the amplitude-envelope decay rate (not the energy decay rate)</li>
+<li><strong>Notes:</strong> b/(2m) has units of 1/time and is consistent with the later use of energy decay exp(−2γ t) (energy decays at twice the amplitude rate).</li>
+</ul>
+
+<ul>
+<li>✔ <strong>Energy exponential decay model (methods)</strong> (Eq. (3), Sec. 2.3, p.3; also Intro p.2)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Corrected energy follows E(t)=E0 exp(−2γobs t), with E0 as a fit parameter.</li>
+<li><strong>Checks:</strong> definition consistency, sanity/limiting case</li>
+<li><strong>Verdict:</strong> PASS; confidence: high; impact: critical</li>
+<li><strong>Assumptions/inputs:</strong> γobs is intended to match γtheory=b/(2m), Energy decays exponentially with rate 2γ when amplitude decays with rate γ</li>
+<li><strong>Notes:</strong> Given γtheory=b/(2m), an energy model exp(−2γ t) is internally consistent with that definition of γ as an amplitude decay rate.</li>
+</ul>
+
+<ul>
+<li>✖ <strong>Energy exponential decay model (results text inconsistency)</strong> (Sec. 3.2, p.5 (paragraph beginning 'For each of the 20 oscillators...'))</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> The fit uses Ecorrected(t)=E(0)e^(−γobs t).</li>
+<li><strong>Checks:</strong> notation/definition consistency, cross-section consistency</li>
+<li><strong>Verdict:</strong> FAIL; confidence: high; impact: critical</li>
+<li><strong>Assumptions/inputs:</strong> Same γobs as defined/used in Sec. 2.3 and Eq. (3)</li>
+<li><strong>Notes:</strong> This contradicts Eq. (3) and Sec. 2.3 (which use exp(−2γobs t)). Unless γobs is redefined here as the energy decay rate (i.e., γobs:=2γ), the paper uses two incompatible definitions. This ambiguity directly affects the interpretation of the reported γ residuals.</li>
+</ul>
+
+<ul>
+<li>⚠ <strong>Residual definition</strong> (Sec. 2.3, p.3; reiterated Sec. 3.2, p.5)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Residuals are defined as ∆γ = γobs − γtheory.</li>
+<li><strong>Checks:</strong> definition consistency, dimensional/units</li>
+<li><strong>Verdict:</strong> UNCERTAIN; confidence: medium; impact: moderate</li>
+<li><strong>Assumptions/inputs:</strong> γobs and γtheory share the same meaning/units</li>
+<li><strong>Notes:</strong> As a definition, ∆γ is fine if γobs and γtheory are the same quantity. Due to the factor-of-2 inconsistency in the fitted model, it is unclear whether γobs is consistently defined as an amplitude decay rate everywhere.</li>
+</ul>
+
+<ul>
+<li>✔ <strong>SNR definition</strong> (Sec. 3.1, p.4)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> SNR is defined as the ratio of initial energy E(0) to the noise-induced bias ∆Enoise.</li>
+<li><strong>Checks:</strong> dimensional/units, definition consistency</li>
+<li><strong>Verdict:</strong> PASS; confidence: high; impact: minor</li>
+<li><strong>Assumptions/inputs:</strong> E(0) and ∆Enoise are both energies</li>
+<li><strong>Notes:</strong> Energy/energy is dimensionless; definition is internally consistent.</li>
+</ul>
+
+<p>### Limitations</p>
+
+<ul>
+<li>The provided PDF text does not include an explicit equation for Etotal(t)=0.5 m v(t)^2 + 0.5 k x(t)^2, so checks involving that expression rely on the paper’s implied standard definition.</li>
+<li>No detailed derivation is shown for why the late-time variance yields exactly the stated constant bias (e.g., expansion of squared noisy measurements and conditions for cross-terms to vanish), limiting verification to consistency checks rather than full proof.</li>
+<li>Figures and tables are not analytically audited beyond checking consistency of the associated mathematical definitions; numerical values and empirical outcomes are out of scope by instruction.</li>
+</ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="reply-card">
+  <div class="reply-header">
+    <span class="reply-title">Numerical Results Audit</span>
+    <span class="badge badge-numerics">Numerics Audit</span>
+    <span class="reply-meta">by Skepthical &middot; 2026-04-08</span>
+  </div>
+  <div class="reply-body">
+    <button class="section-toggle" onclick="toggleSection(this)">
+      <span class="chevron">&#9660;</span> <span class="field-label">Details</span>
+    </button>
+    <div class="section-content">
+      <div class="summary-text"><p>This section audits <strong>numerical/empirical</strong> consistency: reported metrics, experimental design, baseline comparisons, statistical evidence, leakage risks, and reproducibility.</p>
+
+<p>Five numeric/form checks were run: four passed (cross-referenced constants and a time-window containment check), and one failed due to an inconsistent exponent multiplier (2 vs 1) in the energy-decay model across sections.</p>
+
+<p>### Checked items</p>
+
+<ul>
+<li>✔ <strong>C1_eq1_noise_bias_halves</strong> (Page 3/6, Eq. (1): “∆Enoise = 1/2 kσx^2 + 1/2 mσv^2”)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> The noise-induced energy bias is given as ∆Enoise = 1/2*k*σx^2 + 1/2*m*σv^2 (also described as 0.5(kσx^2 + mσv^2) elsewhere).</li>
+<li><strong>Checks:</strong> symbolic_equivalence</li>
+<li><strong>Verdict:</strong> PASS</li>
+<li><strong>Notes:</strong> Heuristic equivalence check passed (matching 0.5 factors and presence of corresponding terms). Full CAS symbolic proof was not performed.</li>
+</ul>
+
+<ul>
+<li>✔ <strong>C2_mean_sd_repeated_across_sections</strong> (Page 1/6 Abstract; Page 5/6 Results §3.2; Page 6/6 Table 1 and Conclusions)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Mean residual reported as 0.0082 rad/s and standard deviation as 0.0197 rad/s; these numbers appear in multiple places and should match exactly.</li>
+<li><strong>Checks:</strong> cross_reference_equality</li>
+<li><strong>Verdict:</strong> PASS</li>
+<li><strong>Notes:</strong> All cross-referenced occurrences of the mean residual (0.0082) and residual standard deviation (0.0197) match exactly after parsing.</li>
+</ul>
+
+<ul>
+<li>✔ <strong>C3_dataset_size_consistency</strong> (Page 1/6 Abstract; Page 2/6 §2.1; Page 5/6 Figure 2 caption; Page 6/6 Table 1 caption; Page 6/6 Conclusions)</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> The paper repeatedly states the dataset contains 20 simulated oscillators; verify all mentions agree.</li>
+<li><strong>Checks:</strong> cross_reference_equality</li>
+<li><strong>Verdict:</strong> PASS</li>
+<li><strong>Notes:</strong> All checked mentions of the dataset size are consistent at n = 20.</li>
+</ul>
+
+<ul>
+<li>✔ <strong>C4_time_window_vs_total_duration</strong> (Page 2/6 §2.1 (20-second interval); Page 3/6 §2.2 (t > 15 s window))</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Signals are analyzed over a 20-second interval, and the late-time noise window is defined as t > 15 s; verify window lies within the recorded interval.</li>
+<li><strong>Checks:</strong> range_containment</li>
+<li><strong>Verdict:</strong> PASS</li>
+<li><strong>Notes:</strong> Containment condition holds: 15 s < 20 s, so the late-time window exists within the stated record duration.</li>
+</ul>
+
+<ul>
+<li>✖ <strong>C5_exponent_factor_consistency_energy_decay</strong> (Page 2/6 (E(t)=E0 exp(−2γt)); Page 3/6 Eq. (3) (E(t)=E0 exp(−2γobs t)); Page 5/6 §3.2 text (Ecorrected(t)=E(0)e^{−γobs t}))</li>
+</ul>
+
+<ul>
+<li><strong>Claim:</strong> Energy decay model exponent appears with a factor of 2 in Methods but appears without the factor 2 in Results text; flag as an internal consistency check (form mismatch).</li>
+<li><strong>Checks:</strong> model_form_consistency</li>
+<li><strong>Verdict:</strong> FAIL</li>
+<li><strong>Notes:</strong> Inconsistent exponent multiplier on γ detected across statements (unique multipliers {2, 1}).</li>
+</ul>
+
+<p>### Limitations</p>
+
+<ul>
+<li>Only the provided PDF text was used; no external datasets or code outputs are available to recompute statistics like mean/SD of residuals or SNR values.</li>
+<li>Figure-based quantitative claims cannot be verified without extracting underlying numeric data; pixel/plot reading is excluded by scope.</li>
+<li>Most equations are symbolic; fast checks are limited to algebraic equivalence, cross-reference consistency, and simple inequalities based on explicitly stated numbers.</li>
+</ul></div>
+    </div>
+  </div>
+</div>
+
+  <!-- Review PDF embed -->
+  <div class="pdf-section">
+    <h3>Full Review Report</h3>
+    <div class="pdf-container">
+      <iframe src="review.pdf" title="Review PDF"></iframe>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <a href="https://parallelscience.org">ParallelScience</a>
+  &middot; Reviewed by <a href="https://skepthical.com">Skepthical</a>
+  &middot; Inspired by <a href="https://openreview.net">OpenReview</a>
+</footer>
+
+</body>
+</html>
