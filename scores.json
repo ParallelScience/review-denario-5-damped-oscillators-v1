@@ -1,0 +1,9 @@
+{
+  "soundness": 4,
+  "novelty": 4,
+  "significance": 5,
+  "clarity": 5,
+  "evidence_quality": 4,
+  "overall": 4,
+  "justification": "The paper proposes a simple, physically interpretable bias subtraction for noise-induced energy floors and shows plausible improvements on simulated oscillators, but key rigor gaps remain. The Mathematical Consistency and Numerical audits both flag a critical factor-of-two inconsistency between the stated energy-decay model and the fitted model, creating ambiguity in the reported damping rates; assumptions underlying the bias term and the handling of clipping are under-specified. Evidence is limited to 20 idealized simulations with no baselines or robustness checks (window choice, detrending, derived-velocity noise), reducing confidence in generality. While the idea is useful and presentation is mostly clear, these issues notably weaken technical soundness and evidential support."
+}
